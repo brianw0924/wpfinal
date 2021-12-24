@@ -1,0 +1,11 @@
+{
+  "name": "wpfinal",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:brianw0924/wpfinal.git",
+  "license": "MIT",
+  "scripts": {
+    "start": "cd frontend && yarn start",
+    "server": "cd backend && yarn server"
+  }
+}
