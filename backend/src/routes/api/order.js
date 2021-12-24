@@ -6,7 +6,7 @@ const order = async (req, res) => {
   });
   try {
     if (post.to.length < post.number) {
-      post.to = [...to, post.body.user];
+      post.to = [...post.to, req.body.user];
       res.status(200).json({
         "message": "success",
       });
