@@ -11,6 +11,7 @@ const newPost = async (req, res) => {
     from: req.body.from,
     to: [],
   });
+  console.log(req)
   try {
     await post.save();
     res.status(200).json({
