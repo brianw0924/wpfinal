@@ -14,7 +14,7 @@ router.get('/allPosts', allPosts);
 router.get('/postDetail', postDetail);
 
 router.post('/givePost', givePost); // 贈送
-router.post('/validPost', validPost); // 可領取
+router.get('/validPost', validPost); // 可領取
 router.post('/obtainPost', obtainPost); // 已搶到
 
 export default router;
