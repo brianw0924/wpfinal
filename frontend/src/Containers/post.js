@@ -1,60 +1,55 @@
-import React, { useState, useEffect } from 'react'
-import moment from 'moment'
-import instance from '../instance'
+import React, { useState, useEffect } from "react"
+import moment from "moment"
+import { POST_DETAIL_QUERY, ORDER_MUTATION } from "../graphql";
+import { useQuery, useMutation } from "@apollo/client";
+import { useParams } from "react-router-dom"
+import { IconButton, Button, Typography } from "@material-ui/core"
+import { Delete as DeleteIcon } from "@material-ui/icons"
+import styled from "styled-components";
 
-import { useParams } from 'react-router-dom'
-import { IconButton, Button, Typography } from '@material-ui/core'
-import { Delete as DeleteIcon } from '@material-ui/icons'
-
-import styled from 'styled-components';
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   margin: 10px
 `
 
-function Post(props) {
+// todo: show number, user...
+function Post({ username, ...props }) {
   const { pid } = useParams()
-  const [data, setData] = useState(null)
-
-  // get the full information of a post from database
-  const getPostDetail = async () => {
-    const {
-      data: {post}
-    } = await instance.get('/postDetail', {
-      params: {
-        pid
-      }
-    });
-    setData(post);
-  }
+  const [detail, setDetail] = useState(null)
+  const { data, subscribeToMore } = useQuery(POST_DETAIL_QUERY, {
+    variables: { postId: pid, },
+  });
+  const [order] = useMutation(ORDER_MUTATION);
 
   // delete a post from database
   const delPost = async () => {
-    await instance.delete('/post', {
-      params: {
-        pid
+    // await instance.delete("/post", {
+    //   params: {
+    //     pid
+    //   }
+    // });
+    // setTimeout(() => {
+    //   props.navigate(-1)
+    // }, 300)
+  }
+  const orderFood = async () => {
+    const msg = await order({
+      variables: {
+        name: username,
+        postId: pid,
       }
     });
-    setTimeout(() => {
-      props.navigate(-1)
-    }, 300)
-  }
-
-  const orderFood = async () => {
-    const {
-      data: { message },
-    } = await instance.post('/order', {
-      postId: pid,
-      user: "薇薇葆兒",
-    });
+    console.log(msg)
+    // todo deal with success or failed
     props.navigate(-1);
   }
 
   // fetch the full information of a post from database
   useEffect(() => {
-    getPostDetail();
-  }, [])
+    if (!data) return;
+    setDetail(data.postDetail);
+  }, [data])
   
   return (
     <div className="article-wrapper">
@@ -62,10 +57,10 @@ function Post(props) {
         <Button variant="contained" color="primary" id="goback-reply-btn" onClick={() => props.navigate(-1)}>Back</Button>
       </div>
 
-      {data ?
+      {detail ?
         <div className="article-container">
           <div className="article-title" id="pid-detail-title">
-            {data.title}
+            {detail.title}
 
             {/* trigger the delPost function when click */}
             <IconButton onClick={delPost} className="post-delete" size="small" id="pid-detail-del-btn">
@@ -73,16 +68,16 @@ function Post(props) {
             </IconButton>
           </div>
           <div className="article-time">
-            <span id="pid-detail-time">{moment(data.timestamp).format('YYYY-MM-DD HH:mm:ss')}</span>
+            <span id="pid-detail-time">{moment(detail.timestamp).format("YYYY-MM-DD HH:mm:ss")}</span>
           </div>
           <div className="article-content-container">
-            <Typography component={'span'} id="pid-detail-content">
-              {data.content}
+            <Typography component={"span"} id="pid-detail-content">
+              {detail.content}
             </Typography>
           </div>
           <div className="article-content-container">
-            <Typography component={'span'} id="pid-detail-from">
-              {`Location: ${data.location}`}
+            <Typography component={"span"} id="pid-detail-from">
+              {`Location: ${detail.location}`}
             </Typography>
           </div>
           <ButtonWrapper>

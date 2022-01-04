@@ -1,0 +1,47 @@
+type Query {
+  findUser(name: String!): ID!
+  allPosts: [Post!]!
+  givePosts(user: String!): [Post!]!
+  obtainPosts(user: String!): [Post!]!
+  validPosts: [Post!]!
+  postDetail(postId: ID!): Post!
+}
+
+type Mutation {
+  createUser(name: String!): String!
+  newPost(input: NewPostInput!): Post
+  order(name: String!, postId: ID!): String!
+}
+
+type Subscription {
+  postCreated: Post!
+  orderCreated: Post!
+}
+
+scalar Date
+
+type User {
+  id: ID!
+  name: String!
+  give: [Post!]
+  order: [Post!]
+}
+
+type Post {
+  id: ID!
+  title: String!
+  content: String!
+  number: Int!
+  location: String!
+  timestamp: Date!
+  from: String!
+}
+
+# Input for creating a post
+input NewPostInput {
+  title: String!
+  content: String!
+  number: Int!
+  location: String!
+  from: String!
+}

@@ -1,20 +1,27 @@
-import express from 'express';
+import { GraphQLServer, PubSub } from 'graphql-yoga';
+import * as db from './models';
+import Query from './resolvers/Query';
+import Mutation from './resolvers/Mutation';
+import Subscription from './resolvers/Subscription';
 import connectMongoDB from './mongo';
-import cors from 'cors'
-import route from './routes/index';
+
+const pubSub = new PubSub();
+
+const server = new GraphQLServer({
+  typeDefs: './src/schema.graphql',
+  resolvers: {
+    Query,
+    Mutation,
+    Subscription,
+  },
+  context: {
+    db,
+    pubSub,
+  },
+});
 
 connectMongoDB();
-const app = express()
-
-// init middleware
-app.use(cors());
-// define routes
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use('/api', route);
-
-// define server
 const port = process.env.PORT || 5000;
-app.listen(port, () => {
-  console.log(`Server is up on port ${port}.`);
+server.start({ port }, () => {
+  console.log(`The server is up on port ${port}!`);
 });

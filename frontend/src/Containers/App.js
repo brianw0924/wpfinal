@@ -5,12 +5,12 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 import './App.css'
 
-function App(props) {
-  document.title = '110-1 Hackathon 2'
+function App({ client, ...props }) {
+  document.title = 'NTU Food Giveaway'
   
   return (
     <Router>
-      <Guide />
+      <Guide client={client} />
     </Router>
   );
 }

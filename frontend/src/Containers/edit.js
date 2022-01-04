@@ -1,32 +1,40 @@
 import React, { useState } from 'react'
-import instance from '../instance'
-
 import { Button, TextField } from '@material-ui/core'
 import { Delete as DeleteIcon, LocationOff, Send as SendIcon } from '@material-ui/icons'
-import { v4 as uuidv4, v4 } from 'uuid'
+import { useMutation } from "@apollo/react-hooks";
+import { 
+  CREATE_POST_MUTATION,
+  ALL_POSTS_QUERY,
+} from "../graphql";
 
-function Edit(props) {
+function Edit({ username, ...props }) {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [number, setNumber] = useState(0)
   const [location, setLocation] = useState('')
-  // create a new post and save it to database 
-  const handleSubmit = async () => {
-    console.log('sub')
-    const {
-      data: { message },
-    } = await instance.post('/newPost', {
-        postId: uuidv4(),
-        title: title.trim(),
-        content: content.trim(),
-        number: number,
-        timestamp: Date.now(),      
-        location: location,
-        from: 'Wei'
+  const [newPost] = useMutation(CREATE_POST_MUTATION);
+  
+  // create a new post and save it to database
+  const handleSubmit = () => {
+    newPost({
+      variables: {
+        input: {
+          title: title.trim(),
+          content: content.trim(),
+          number: parseInt(number),
+          location: location,
+          from: username,
+        }
+      },
+      awaitRefetchQueries: true,
+      refetchQueries: [{ query: ALL_POSTS_QUERY, }],
+      onCompleted: () => {
+        props.navigate(-1);
+      },
     })
-    setTimeout(() => {
-      props.navigate(-1);
-    }, 300)
+    // setTimeout(() => {
+    //   props.navigate(-1);
+    // }, 300)
   }
 
   const handleChange = (func) => (event) => {

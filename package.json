@@ -7,9 +7,5 @@
   "scripts": {
     "start": "cd frontend && yarn start",
     "server": "cd backend && yarn server"
-  },
-  "dependencies": {
-    "antd": "^4.17.4",
-    "axios": "^0.24.0"
   }
 }
