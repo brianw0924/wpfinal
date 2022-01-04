@@ -16,7 +16,7 @@ const SignInWrapper = styled.div`
   margin: auto;
 `;
 
-const SignIn = ({ username, setUsername, displayStatus, client, navigate}) => {
+const SignIn = ({ username, setUsername, displayStatus, setSignedIn, client, navigate}) => {
   const [createUser] = useMutation(CREATE_USER_MUTATION);
   const [signUpVisible, setSignUpVisible] = useState(false);
 
@@ -79,6 +79,7 @@ const SignIn = ({ username, setUsername, displayStatus, client, navigate}) => {
             })
             return;
           }
+          setSignedIn(true);
           navigate('/main')
         }}
       />

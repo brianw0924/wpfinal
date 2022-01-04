@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { message } from 'antd'
 import "antd/dist/antd.css";
 import Appbar from '../Components/appbar'
@@ -9,12 +9,15 @@ import NoMatch from '../Components/noMatch'
 import SignIn from './SignIn'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 
-const LOCALSTORAGE_KEY = "saved-username";
+const LOCALSTORAGE_USER = "save-user";
+const LOCALSTORAGE_SIGNED_IN = "save-signedIn";
 
 function Guide({ client, ...props }) {
   const navigate = useNavigate()
-  const savedUsername = localStorage.getItem(LOCALSTORAGE_KEY);
-	const [username, setUsername] = useState(savedUsername || '');
+  const savedUsername = localStorage.getItem(LOCALSTORAGE_USER);
+	const [username, setUsername] = useState("" || savedUsername);
+  const savedSignedIn = localStorage.getItem(LOCALSTORAGE_SIGNED_IN);
+  const [signedIn, setSignedIn] = useState(false || savedSignedIn);
 
   const displayStatus = (payload) => {
     if (payload.msg) {
@@ -35,6 +38,13 @@ function Guide({ client, ...props }) {
       }
     }
   }
+
+  useEffect(() => {
+    if (signedIn) {
+      localStorage.setItem(LOCALSTORAGE_USER, username);
+      localStorage.setItem(LOCALSTORAGE_SIGNED_IN, signedIn);
+    } else navigate("/");
+  }, [signedIn, username]);
   
   return (
     <div className="wrapper">
@@ -45,6 +55,7 @@ function Guide({ client, ...props }) {
             username={username}
             setUsername={setUsername}
             displayStatus={displayStatus}
+            setSignedIn={setSignedIn}
             client={client}
             navigate={navigate}
         />}/>
