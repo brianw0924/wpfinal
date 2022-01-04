@@ -1,9 +1,14 @@
+import bcrypt from "bcrypt";
+
 const Mutation = {
   // create user
-  createUser: async (parent, { name }, { db, pubSub }) => {
+  createUser: async (parent, { name, password }, { db, pubSub }) => {
     const user = await db.User.findOne({ name })
     if (user) return "exist";
-    await new db.User({ name }).save();
+    await new db.User({ 
+      name, 
+      password: bcrypt.hashSync(password, bcrypt.genSaltSync()),
+    }).save();
     return "success";
   },
   // new post

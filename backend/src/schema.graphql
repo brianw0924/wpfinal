@@ -1,5 +1,5 @@
 type Query {
-  findUser(name: String!): ID!
+  findUser(name: String!, password: String!): String!
   allPosts: [Post!]!
   givePosts(user: String!): [Post!]!
   obtainPosts(user: String!): [Post!]!
@@ -8,7 +8,7 @@ type Query {
 }
 
 type Mutation {
-  createUser(name: String!): String!
+  createUser(name: String!, password: String!): String!
   newPost(input: NewPostInput!): Post
   order(name: String!, postId: ID!): String!
 }
@@ -23,6 +23,7 @@ scalar Date
 type User {
   id: ID!
   name: String!
+  password: String!
   give: [Post!]
   order: [Post!]
 }

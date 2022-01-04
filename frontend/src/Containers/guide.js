@@ -18,6 +18,7 @@ function Guide({ client, ...props }) {
 	const [username, setUsername] = useState("" || savedUsername);
   const savedSignedIn = localStorage.getItem(LOCALSTORAGE_SIGNED_IN);
   const [signedIn, setSignedIn] = useState(false || savedSignedIn);
+  console.log(username, signedIn)
 
   const displayStatus = (payload) => {
     if (payload.msg) {

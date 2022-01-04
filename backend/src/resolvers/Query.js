@@ -1,9 +1,13 @@
+import bcrypt from "bcrypt";
+
 const Query = {
   // find user
-  findUser: async (parent, { name }, { db }, info) => {
+  findUser: async (parent, { name, password }, { db }, info) => {
     const user = await db.User.findOne({ name });
-    if (user) return user._id;
-    return "";
+    if (!user) return "User not found.";
+    if (!bcrypt.compareSync(password, user.password))
+      return "Wrong password.";
+    return "success";
   },
   // get all posts
   allPosts: async (parent, args, { db }, info) => {

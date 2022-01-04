@@ -1,24 +1,25 @@
-import { Input, Button, Modal } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Input, Button } from "antd";
+import { UserOutlined, KeyOutlined } from "@ant-design/icons";
 import Title from "../Components/Title";
 import styled from 'styled-components';
-import { useMutation } from "@apollo/react-hooks";
-import { CREATE_USER_MUTATION, GET_USER_QUERY } from "../graphql";
+import { GET_USER_QUERY } from "../graphql";
 import { useState } from "react";
+import SignUp from "../Components/SignUp";
 
 const SignInWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: top;
-  height: 100vh;
+  justify-content: center;
+  height: 50vh;
   width: 500px;
   margin: auto;
 `;
 
 const SignIn = ({ username, setUsername, displayStatus, setSignedIn, client, navigate}) => {
-  const [createUser] = useMutation(CREATE_USER_MUTATION);
   const [signUpVisible, setSignUpVisible] = useState(false);
+  const [password, setPassword] = useState("");
+  setSignedIn(false);
 
   return (
     <>
@@ -28,61 +29,52 @@ const SignIn = ({ username, setUsername, displayStatus, setSignedIn, client, nav
               Sign Up
           </Button>
       </Title>
-      <>
-        <Modal
-          visible={signUpVisible}
-          onOk={async () => {
-            const { data } = await createUser({
-              variables: {
-                name: username,
-              },
-            });
-            if (data.createUser === "exist") {
-              displayStatus({ 
-                type: "error",
-                msg: "User name has been used."
-              })
-            }
-            setSignUpVisible(false);
-          }}
-          onCancel={() => {
-            setSignUpVisible(false);
-          }}
-          title="Sign Up"
-          okButtonProps={{ disabled: username === "" }}
-        >
-          <Input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="user"
-          ></Input>
-        </Modal>
-      </>
-      <SignInWrapper>
-      <Input.Search
-        prefix={<UserOutlined/>}
-        value={username}
-        onChange={(e)=>{setUsername(e.target.value)}}
-        placeholder="Enter your name"
-        size="large"
-        style={{width:300, margin:50}}
-        enterButton={<Button disabled={!username} type="primary">Sign In</Button>}
-        onSearch={async () => {
-          const { data } = await client.query({
-            query: GET_USER_QUERY,
-            variables: { name: username, },
-          })
-          if (!data.findUser) {
-            displayStatus({
-              type: "error",
-              msg: "User not found."
-            })
-            return;
-          }
-          setSignedIn(true);
-          navigate('/main')
-        }}
+      <SignUp
+        signUpVisible={signUpVisible}
+        setSignUpVisible={setSignUpVisible}
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+        displayStatus={displayStatus}
       />
+      <SignInWrapper>
+        <Input 
+          prefix={<UserOutlined/>}
+          value={username}
+          onChange={(e)=>{setUsername(e.target.value)}}
+          placeholder="Enter your name"
+          size="large"
+          style={{ width:300 }}
+        />
+        <Input.Search
+          prefix={<KeyOutlined/>}
+          type="password"
+          value={password}
+          onChange={(e)=>{setPassword(e.target.value)}}
+          placeholder="password"
+          size="large"
+          style={{ width:300 }}
+          enterButton={<Button disabled={!username || !password} type="primary">Sign In</Button>}
+          onSearch={async () => {
+            const { data } = await client.query({
+              query: GET_USER_QUERY,
+              variables: { 
+                name: username,
+                password: password,
+              },
+            })
+            if (data.findUser !== "success") {
+              displayStatus({
+                type: "error",
+                msg: data.findUser,
+              })
+              return;
+            }
+            setSignedIn(true);
+            navigate('/main')
+          }}
+        />
       </SignInWrapper>
     </>
   )
