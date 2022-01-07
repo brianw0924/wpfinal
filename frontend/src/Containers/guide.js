@@ -12,6 +12,10 @@ import { Routes, Route, useNavigate } from 'react-router-dom'
 const LOCALSTORAGE_USER = "save-user";
 const LOCALSTORAGE_SIGNED_IN = "save-signedIn";
 
+message.config({
+  top: 80,
+});
+
 function Guide({ client, ...props }) {
   const navigate = useNavigate()
   const savedUsername = localStorage.getItem(LOCALSTORAGE_USER);
@@ -23,7 +27,7 @@ function Guide({ client, ...props }) {
   const displayStatus = (payload) => {
     if (payload.msg) {
       const { type, msg } = payload;
-      const content = {content:msg, duration:0.5};
+      const content = {content:msg, duration:1};
       switch (type){
         case 'success':
           message.success(content);
@@ -60,9 +64,13 @@ function Guide({ client, ...props }) {
             client={client}
             navigate={navigate}
         />}/>
-        <Route path="/main" element={<Board navigate={navigate} />} />
-        <Route path="/post/:pid" element={<Post username={username} navigate={navigate} />} />
-        <Route path="/new" element={<Edit username={username} navigate={navigate} />} />
+        <Route path="/main" element=
+          {<Board username={username} navigate={navigate}/>} 
+        />
+        <Route path="/post/:pid" element=
+          {<Post username={username} navigate={navigate} />} />
+        <Route path="/new" element=
+          {<Edit username={username} navigate={navigate} displayStatus={displayStatus}/>} />
         <Route element={<NoMatch navigate={navigate} />} />
       </Routes>
     </div>

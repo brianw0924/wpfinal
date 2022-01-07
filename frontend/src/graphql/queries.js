@@ -12,6 +12,8 @@ const queryPosts = (type, user) => gql`
       id
       title
       timestamp
+      number
+      from
     }
   }
 `;

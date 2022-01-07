@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Button } from "@material-ui/core";
+import { Tabs } from 'antd';
 import { 
   ALL_POSTS_QUERY,
   POST_CREATED_SUBSCRIPTION,
 } from "../graphql";
 import { useQuery } from "@apollo/client";
 
-function Board(props) {
+const { TabPane } = Tabs;
+function callback(key) {
+  console.log(key);
+}
+
+function Board({username, ...props}) {
   const [posts, setPosts] = useState([]);
   
   // fetch all posts from database
@@ -38,21 +44,60 @@ function Board(props) {
       </div>
       
       <div className="board-discuss-container">
-        {posts.length ?
-          <div className="articles-container">
-            {posts.map((post, i) => (
-              <div className="article-post" key={i} id={`pid-${i}`}>
-                <div className="article-prefix">
-                  <span className="each-tag">【Food】</span> &nbsp;
-                  <span className="each-id" id={`pid-${i}-title`} onClick={() => props.navigate(`/post/${post.id}`)}>{post.title}</span>
-                </div>
-                <div className="article-postfix">
-                  <span className="each-time" id={`pid-${i}-time`}>{moment(post.timestamp).format("YYYY-MM-DD")}</span>
-                </div>
-              </div>
-            ))}
-          </div> : <div></div>
-        }
+        <Tabs defaultActiveKey="1" onChange={callback}>
+          <TabPane tab="Others food" key="1" style={{"font-weight": "bold"}}>
+            {posts.length ?
+              <div className="articles-container">
+                {posts.filter(post=>post.number>0 && post.from!=username).map((post, i) => (
+                  <div className="article-post" key={i} id={`pid-${i}`}>
+                    <div className="article-prefix">
+                      <span className="each-tag">【Food】</span> &nbsp;
+                      <span className="each-id" id={`pid-${i}-title`} onClick={() => props.navigate(`/post/${post.id}`)}>{post.title}</span>
+                    </div>
+                    <div className="article-postfix">
+                      <span className="each-time" id={`pid-${i}-time`}>{moment(post.timestamp).format("YYYY-MM-DD")}</span>
+                    </div>
+                  </div>
+                ))}
+              </div> : <div></div>
+            }
+          </TabPane>
+          <TabPane tab="My order" key="2">
+            {posts.length ?
+                <div className="articles-container">
+                  {posts.filter(post=>post.number>0 && post.from!=username).map((post, i) => (
+                    <div className="article-post" key={i} id={`pid-${i}`}>
+                      <div className="article-prefix">
+                        <span className="each-tag">【Food】</span> &nbsp;
+                        <span className="each-id" id={`pid-${i}-title`} onClick={() => props.navigate(`/post/${post.id}`)}>{post.title}</span>
+                      </div>
+                      <div className="article-postfix">
+                        <span className="each-time" id={`pid-${i}-time`}>{moment(post.timestamp).format("YYYY-MM-DD")}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div> : <div></div>
+              }
+          </TabPane>
+          <TabPane tab="My food" key="3">
+            {posts.length ?
+                <div className="articles-container">
+                  {posts.filter(post=>post.from==username).map((post, i) => (
+                    <div className="article-post" key={i} id={`pid-${i}`}>
+                      <div className="article-prefix">
+                        <span className="each-tag">【Food】</span> &nbsp;
+                        <span className="each-id" id={`pid-${i}-title`} onClick={() => props.navigate(`/post/${post.id}`)}>{post.title}</span>
+                      </div>
+                      <div className="article-postfix">
+                        <span className="each-time" id={`pid-${i}-time`}>{moment(post.timestamp).format("YYYY-MM-DD")}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div> : <div></div>
+              }
+          </TabPane>
+        </Tabs>
+        
       </div>
     </>
   )

@@ -7,7 +7,7 @@ import {
   ALL_POSTS_QUERY,
 } from "../graphql";
 
-function Edit({ username, ...props }) {
+function Edit({ username, displayStatus, ...props }) {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [number, setNumber] = useState(0)
@@ -16,6 +16,20 @@ function Edit({ username, ...props }) {
   
   // create a new post and save it to database
   const handleSubmit = () => {
+    if(!title || !content || !location){
+      displayStatus({
+        type:"error",
+        msg:"Leave no blanks!"
+      })
+      return;
+    }
+    if(parseInt(number) <= 0){
+      displayStatus({
+        type:"error",
+        msg:"Number must >= 0!"
+      })
+      return;
+    }
     newPost({
       variables: {
         input: {

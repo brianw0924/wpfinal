@@ -23,11 +23,8 @@ const SignIn = ({ username, setUsername, displayStatus, setSignedIn, client, nav
 
   return (
     <>
-      <Title>
+      <Title style={{margin:50}}>
           <h1>Don't waste! Giveaway!</h1>
-          <Button type="primary" danger onClick={() => setSignUpVisible(true)}>
-              Sign Up
-          </Button>
       </Title>
       <SignUp
         signUpVisible={signUpVisible}
@@ -45,7 +42,7 @@ const SignIn = ({ username, setUsername, displayStatus, setSignedIn, client, nav
           onChange={(e)=>{setUsername(e.target.value)}}
           placeholder="Enter your name"
           size="large"
-          style={{ width:300 }}
+          style={{ width:300, margin:5}}
         />
         <Input.Search
           prefix={<KeyOutlined/>}
@@ -54,7 +51,7 @@ const SignIn = ({ username, setUsername, displayStatus, setSignedIn, client, nav
           onChange={(e)=>{setPassword(e.target.value)}}
           placeholder="password"
           size="large"
-          style={{ width:300 }}
+          style={{ width:300, margin:5}}
           enterButton={<Button disabled={!username || !password} type="primary">Sign In</Button>}
           onSearch={async () => {
             const { data } = await client.query({
@@ -71,11 +68,21 @@ const SignIn = ({ username, setUsername, displayStatus, setSignedIn, client, nav
               })
               return;
             }
+            displayStatus({
+              type: "success",
+              msg: "Logged In!",
+            })
             setSignedIn(true);
             navigate('/main')
           }}
         />
+        <Button 
+          type="primary" style={{margin:5}}
+          danger onClick={() => setSignUpVisible(true)}>
+          Sign Up
+        </Button>
       </SignInWrapper>
+      
     </>
   )
 }

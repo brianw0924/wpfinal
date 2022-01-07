@@ -163,7 +163,8 @@
   height: auto;
   position: relative;
   left: 20%;
-  margin: 15px 0 0 0;
+  margin: 15px;
+  padding: 15px;
   border-radius: 5px;
   box-shadow: 3px 3px 6px rgb(214, 214, 214);
 }
