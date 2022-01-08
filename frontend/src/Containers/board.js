@@ -17,7 +17,7 @@ function Board({username, ...props}) {
   const [posts, setPosts] = useState([]);
   
   // fetch all posts from database
-  const { data, subscribeToMore } = useQuery(ALL_POSTS_QUERY);
+  const { data, loading, subscribeToMore } = useQuery(ALL_POSTS_QUERY);
   useEffect(() => {
     if (!data) return;
     setPosts(data.allPosts);
@@ -48,7 +48,7 @@ function Board({username, ...props}) {
           <TabPane tab="Others food" key="1" style={{"font-weight": "bold"}}>
             {posts.length ?
               <div className="articles-container">
-                {posts.filter(post=>post.number>0 && post.from!=username).map((post, i) => (
+                {posts.filter(post=>post.number>0 && post.from !== username).map((post, i) => (
                   <div className="article-post" key={i} id={`pid-${i}`}>
                     <div className="article-prefix">
                       <span className="each-tag">【Food】</span> &nbsp;
@@ -65,7 +65,7 @@ function Board({username, ...props}) {
           <TabPane tab="My order" key="2">
             {posts.length ?
                 <div className="articles-container">
-                  {posts.filter(post=>post.number>0 && post.from!=username).map((post, i) => (
+                  {posts.filter(post=>post.number>0 && post.from !== username).map((post, i) => (
                     <div className="article-post" key={i} id={`pid-${i}`}>
                       <div className="article-prefix">
                         <span className="each-tag">【Food】</span> &nbsp;
@@ -82,7 +82,7 @@ function Board({username, ...props}) {
           <TabPane tab="My food" key="3">
             {posts.length ?
                 <div className="articles-container">
-                  {posts.filter(post=>post.from==username).map((post, i) => (
+                  {posts.filter(post=>post.from === username).map((post, i) => (
                     <div className="article-post" key={i} id={`pid-${i}`}>
                       <div className="article-prefix">
                         <span className="each-tag">【Food】</span> &nbsp;
