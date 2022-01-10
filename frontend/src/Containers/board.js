@@ -18,51 +18,6 @@ function callback(key) {
 }
 
 function Board({username, ...props}) {
-
-  // fetch all posts from database
-  const VALID = useQuery(VALID_POSTS_QUERY);
-  const OBTAIN = useQuery(OBTAIN_POSTS_QUERY, {variables:{user:username}})
-  const GIVE = useQuery(GIVE_POSTS_QUERY, {variables:{user:username}})
-
-  // subscription to post created
-  useEffect(() => {
-      VALID.subscribeToMore({
-        document: POST_CREATED_SUBSCRIPTION,
-        updateQuery: (prev, { subscriptionData }) => {
-          if (!subscriptionData.data) return prev;
-          return {
-            validPosts: [subscriptionData.data.postCreated, ...prev.validPosts],
-          };
-        },
-      });
-  }, [VALID.subscribeToMore]);
-
-  useEffect(() => {
-    OBTAIN.subscribeToMore({
-      document: POST_CREATED_SUBSCRIPTION,
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev;
-        return {
-          obtainPosts: [subscriptionData.data.postCreated, ...prev.obtainPosts],
-        };
-      },
-    });
-  }, [OBTAIN.subscribeToMore]);
-
-  useEffect(() => {
-    GIVE.subscribeToMore({
-      document: POST_CREATED_SUBSCRIPTION,
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev;
-        return {
-          givePosts: [subscriptionData.data.postCreated, ...prev.givePosts],
-        };
-      },
-    });
-  }, [GIVE.subscribeToMore]);
-
-  
-
   return (
     <>
       <div className="board-navbar">
