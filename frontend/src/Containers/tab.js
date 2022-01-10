@@ -14,9 +14,12 @@ function Tab({query_fn, post_type, username, ...props}){
           document: POST_CREATED_SUBSCRIPTION,
           updateQuery: (prev, { subscriptionData }) => {
             if (!subscriptionData.data) return prev;
-            return {
-              validPosts: [subscriptionData.data.postCreated, ...prev.validPosts],
-            };
+            var cur = {};
+            cur[post_type] = [subscriptionData.data.postCreated, ...prev.validPosts];
+            return cur
+            // return {
+            //   post_type: [subscriptionData.data.postCreated, ...prev.validPosts],
+            // };
           },
         });
     }, [subscribeToMore]);
