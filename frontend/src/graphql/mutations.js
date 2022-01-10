@@ -21,3 +21,9 @@ export const ORDER_MUTATION = gql`
     order(name: $name, postId: $postId)
   }
 `;
+
+export const DELETE_POST_MUTATION = gql`
+  mutation DeletePost($postId: ID!) {
+    deletePost(postId: $postId)
+  }
+`;
