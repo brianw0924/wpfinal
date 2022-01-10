@@ -8,7 +8,7 @@ const Subscription = {
     subscribe(parent, args, { pubsub }) {
       return pubsub.asyncIterator("ORDER_CREATED");
     },
-  }
+  },
   postDeleted: {
     subscribe: (parent, args, { pubSub }) => {
       return pubSub.asyncIterator("POST_DELETED");
