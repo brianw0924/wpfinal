@@ -15,7 +15,7 @@ function Tab({query_fn, post_type, username, ...props}){
           updateQuery: (prev, { subscriptionData }) => {
             if (!subscriptionData.data) return prev;
             var cur = {};
-            cur[post_type] = [subscriptionData.data.postCreated, ...prev.validPosts];
+            cur[post_type] = [subscriptionData.data.postCreated, ...prev[post_type]];
             return cur
             // return {
             //   post_type: [subscriptionData.data.postCreated, ...prev.validPosts],
