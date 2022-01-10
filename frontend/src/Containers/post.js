@@ -80,6 +80,11 @@ function Post({ username, ...props }) {
               {`Location: ${detail.location}`}
             </Typography>
           </div>
+          <div className="article-content-container">
+            <Typography component={"span"} id="pid-detail-from">
+              {`Left: ${detail.number}`}
+            </Typography>
+          </div>
           <ButtonWrapper>
             <Button variant="contained" color="primary" id="order-btn" onClick={()=>{orderFood()}}>我想要這個酷東西</Button>
           </ButtonWrapper>
