@@ -5,7 +5,9 @@ import { useMutation } from "@apollo/react-hooks";
 import { 
   CREATE_POST_MUTATION,
   ALL_POSTS_QUERY,
-  VALID_POSTS_QUERY
+  VALID_POSTS_QUERY,
+  GIVE_POSTS_QUERY,
+  OBTAIN_POSTS_QUERY,
 } from "../graphql";
 
 function Edit({ username, displayStatus, ...props }) {
@@ -42,7 +44,17 @@ function Edit({ username, displayStatus, ...props }) {
         }
       },
       awaitRefetchQueries: true,
-      refetchQueries: [{ query: VALID_POSTS_QUERY, }],
+      refetchQueries: [
+        { query: VALID_POSTS_QUERY, }, 
+        { 
+          query: GIVE_POSTS_QUERY, 
+          variables: { user: username },
+        }, 
+        { 
+          query: OBTAIN_POSTS_QUERY, 
+          variables: { user: username },
+        }
+      ],
       onCompleted: () => {
         props.navigate(-1);
       },
