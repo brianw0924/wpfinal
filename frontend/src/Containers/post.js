@@ -63,7 +63,7 @@ function Post({ username, ...props }) {
             {detail.title}
 
             {/* trigger the delPost function when click */}
-            <IconButton onClick={delPost} className="post-delete" size="small" id="pid-detail-del-btn">
+            <IconButton disabled={username!=detail.from} onClick={delPost} className="post-delete" size="small" id="pid-detail-del-btn">
               <DeleteIcon fontSize="inherit" />
             </IconButton>
           </div>

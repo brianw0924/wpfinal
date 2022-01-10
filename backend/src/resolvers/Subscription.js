@@ -1,6 +1,6 @@
 const Subscription = {
   postCreated: {
-    subscribe(parent, args, { pubSub }) {
+    subscribe(parent, args, { db, pubSub }) {
       return pubSub.asyncIterator("POST_CREATED");
     },
   }

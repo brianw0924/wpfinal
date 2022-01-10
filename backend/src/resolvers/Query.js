@@ -26,7 +26,9 @@ const Query = {
   },
   // get posts with number > 0
   validPosts: async (parent, args, { db }, info) => {
-    return await db.Post.find({number: { $gt: 0 } });
+    const posts = await db.Post.find({number: { $gt: 0 } }).sort({ timestamp: -1 });
+    // console.log(posts);
+    return posts
   },
   // get post detail
   postDetail: async (parent, { postId }, { db }, info) => {

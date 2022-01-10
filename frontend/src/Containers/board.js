@@ -17,52 +17,27 @@ function callback(key) {
 }
 
 function Board({username, ...props}) {
-  const [posts,  setPosts]  = useState([]);
-  const [orders, setOrders] = useState([]);
-  const [gives,  setGives]  = useState([]);
 
   // fetch all posts from database
-  const res1 = useQuery(VALID_POSTS_QUERY);
-  const res2 = useQuery(OBTAIN_POSTS_QUERY, {variables:{user:username}})
-  const res3 = useQuery(GIVE_POSTS_QUERY, {variables:{user:username}})
-
-  useEffect(() => {
-    if (!res1.data) return;
-    let sortedData = [...res1.data.validPosts]
-    sortedData.sort((a,b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-    setPosts(sortedData);
-  }, [res1.data])
-  
-  useEffect(() => {
-    if(!res2.data) return;
-    let sortedData = [...res2.data.obtainPosts]
-    sortedData.sort((a,b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-    setOrders(sortedData);
-  }, [res2.data])
-
-  useEffect(() => {
-    if(!res3.data) return;
-    let sortedData = [...res3.data.givePosts]
-    sortedData.sort((a,b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-    setGives(sortedData);
-  }, [res3.data])
+  const VALID = useQuery(VALID_POSTS_QUERY);
+  const OBTAIN = useQuery(OBTAIN_POSTS_QUERY, {variables:{user:username}})
+  const GIVE = useQuery(GIVE_POSTS_QUERY, {variables:{user:username}})
 
   // subscription to post created
   useEffect(() => {
-    res1.subscribeToMore({
-      document: POST_CREATED_SUBSCRIPTION,
-      updateQuery: (prev, { subscriptionData }) => {
-        console.log(subscriptionData)
-        if (!subscriptionData.data) return prev;
-        return {
-          validPosts: [subscriptionData.data.postCreated, ...prev.validPosts],
-        };
-      },
-    });
-  }, [res1.subscribeToMore]);
+      VALID.subscribeToMore({
+        document: POST_CREATED_SUBSCRIPTION,
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) return prev;
+          return {
+            validPosts: [subscriptionData.data.postCreated, ...prev.validPosts],
+          };
+        },
+      });
+  }, [VALID.subscribeToMore]);
 
   useEffect(() => {
-    res2.subscribeToMore({
+    OBTAIN.subscribeToMore({
       document: POST_CREATED_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
@@ -71,10 +46,10 @@ function Board({username, ...props}) {
         };
       },
     });
-  }, [res2.subscribeToMore]);
+  }, [OBTAIN.subscribeToMore]);
 
   useEffect(() => {
-    res3.subscribeToMore({
+    GIVE.subscribeToMore({
       document: POST_CREATED_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
@@ -83,7 +58,7 @@ function Board({username, ...props}) {
         };
       },
     });
-  }, [res3.subscribeToMore]);
+  }, [GIVE.subscribeToMore]);
 
   
 
@@ -97,9 +72,9 @@ function Board({username, ...props}) {
       <div className="board-discuss-container">
         <Tabs defaultActiveKey="1" onChange={callback}>
           <TabPane tab="Others food" key="1" style={{"font-weight": "bold"}}>
-            {posts.length ?
+              { VALID.loading ?  <div></div> :
               <div className="articles-container">
-                {posts.map((post, i) => (
+                {VALID.data.validPosts.map((post, i) => (
                   <div className="article-post" key={i} id={`pid-${i}`}>
                     <div className="article-prefix">
                       <span className="each-tag">【Food】</span> &nbsp;
@@ -110,13 +85,14 @@ function Board({username, ...props}) {
                     </div>
                   </div>
                 ))}
-              </div> : <div></div>
-            }
+              </div>
+              }
+
           </TabPane>
           <TabPane tab="My order" key="2">
-            {orders.length ?
+            { OBTAIN.loading ? <div></div> :
                 <div className="articles-container">
-                  {orders.map((post, i) => (
+                  {OBTAIN.data.obtainPosts.map((post, i) => (
                     <div className="article-post" key={i} id={`pid-${i}`}>
                       <div className="article-prefix">
                         <span className="each-tag">【Food】</span> &nbsp;
@@ -127,13 +103,13 @@ function Board({username, ...props}) {
                       </div>
                     </div>
                   ))}
-                </div> : <div></div>
+                </div>
               }
           </TabPane>
           <TabPane tab="My food" key="3">
-            {gives.length ?
+            { GIVE.loading ? <div></div> :
                 <div className="articles-container">
-                  {gives.map((post, i) => (
+                  {GIVE.data.givePosts.map((post, i) => (
                     <div className="article-post" key={i} id={`pid-${i}`}>
                       <div className="article-prefix">
                         <span className="each-tag">【Food】</span> &nbsp;
@@ -144,7 +120,7 @@ function Board({username, ...props}) {
                       </div>
                     </div>
                   ))}
-                </div> : <div></div>
+                </div>
               }
           </TabPane>
         </Tabs>
