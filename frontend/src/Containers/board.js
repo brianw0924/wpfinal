@@ -28,17 +28,23 @@ function Board({username, ...props}) {
 
   useEffect(() => {
     if (!res1.data) return;
-    setPosts(res1.data.validPosts);
+    let sortedData = [...res1.data.validPosts]
+    sortedData.sort((a,b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+    setPosts(sortedData);
   }, [res1.data])
   
   useEffect(() => {
     if(!res2.data) return;
-    setOrders(res2.data.obtainPosts);
+    let sortedData = [...res2.data.obtainPosts]
+    sortedData.sort((a,b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+    setOrders(sortedData);
   }, [res2.data])
 
   useEffect(() => {
     if(!res3.data) return;
-    setGives(res3.data.givePosts);
+    let sortedData = [...res3.data.givePosts]
+    sortedData.sort((a,b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+    setGives(sortedData);
   }, [res3.data])
 
   // subscription to post created
@@ -46,6 +52,7 @@ function Board({username, ...props}) {
     res1.subscribeToMore({
       document: POST_CREATED_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
+        console.log(subscriptionData)
         if (!subscriptionData.data) return prev;
         return {
           validPosts: [subscriptionData.data.postCreated, ...prev.validPosts],
