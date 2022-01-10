@@ -11,11 +11,13 @@ type Mutation {
   createUser(name: String!, password: String!): String!
   newPost(input: NewPostInput!): Post
   order(name: String!, postId: ID!): String!
+  deletePost(postId: ID!): ID!
 }
 
 type Subscription {
   postCreated: Post!
   orderCreated: Post!
+  postDeleted: ID!
 }
 
 scalar Date
