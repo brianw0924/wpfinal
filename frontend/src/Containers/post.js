@@ -6,7 +6,9 @@ import { useParams } from "react-router-dom"
 import { IconButton, Button, Typography } from "@material-ui/core"
 import { Delete as DeleteIcon } from "@material-ui/icons"
 import styled from "styled-components";
-
+import { 
+    ORDER_CREATED_SUBSCRIPTION,
+} from "../graphql";
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -21,6 +23,23 @@ function Post({ username, ...props }) {
     variables: { postId: pid, },
   });
   const [order] = useMutation(ORDER_MUTATION);
+
+  useEffect(() => {
+      console.log("check1");
+      subscribeToMore({
+        document: ORDER_CREATED_SUBSCRIPTION,
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) return prev;
+          console.log("check2");
+          // console.log(subscriptionData.data);
+          return {
+            postDetail: subscriptionData.data.orderCreated
+          };
+        },
+      });
+  }, [subscribeToMore]);
+
+
 
   // delete a post from database
   const delPost = async () => {
@@ -40,7 +59,7 @@ function Post({ username, ...props }) {
         postId: pid,
       }
     });
-    console.log(msg)
+    // console.log(msg)
     // todo deal with success or failed
     props.navigate(-1);
   }
