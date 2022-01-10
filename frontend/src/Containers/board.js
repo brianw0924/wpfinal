@@ -10,6 +10,7 @@ import {
   POST_CREATED_SUBSCRIPTION,
 } from "../graphql";
 import { useQuery } from "@apollo/client";
+import Tab from './tab'
 
 const { TabPane } = Tabs;
 function callback(key) {
@@ -72,56 +73,13 @@ function Board({username, ...props}) {
       <div className="board-discuss-container">
         <Tabs defaultActiveKey="1" onChange={callback}>
           <TabPane tab="Others food" key="1" style={{"font-weight": "bold"}}>
-              { VALID.loading ?  <div></div> :
-              <div className="articles-container">
-                {VALID.data.validPosts.map((post, i) => (
-                  <div className="article-post" key={i} id={`pid-${i}`}>
-                    <div className="article-prefix">
-                      <span className="each-tag">【Food】</span> &nbsp;
-                      <span className="each-id" id={`pid-${i}-title`} onClick={() => props.navigate(`/post/${post.id}`)}>{post.title}</span>
-                    </div>
-                    <div className="article-postfix">
-                      <span className="each-time" id={`pid-${i}-time`}>{moment(post.timestamp).format("YYYY-MM-DD")}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              }
-
+            <Tab username={username} query_fn={VALID_POSTS_QUERY} post_type={"validPosts"} navigate={props.navigate}/>
           </TabPane>
           <TabPane tab="My order" key="2">
-            { OBTAIN.loading ? <div></div> :
-                <div className="articles-container">
-                  {OBTAIN.data.obtainPosts.map((post, i) => (
-                    <div className="article-post" key={i} id={`pid-${i}`}>
-                      <div className="article-prefix">
-                        <span className="each-tag">【Food】</span> &nbsp;
-                        <span className="each-id" id={`pid-${i}-title`} onClick={() => props.navigate(`/post/${post.id}`)}>{post.title}</span>
-                      </div>
-                      <div className="article-postfix">
-                        <span className="each-time" id={`pid-${i}-time`}>{moment(post.timestamp).format("YYYY-MM-DD")}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              }
+            <Tab username={username} query_fn={OBTAIN_POSTS_QUERY} post_type={"obtainPosts"} navigate={props.navigate}/>
           </TabPane>
           <TabPane tab="My food" key="3">
-            { GIVE.loading ? <div></div> :
-                <div className="articles-container">
-                  {GIVE.data.givePosts.map((post, i) => (
-                    <div className="article-post" key={i} id={`pid-${i}`}>
-                      <div className="article-prefix">
-                        <span className="each-tag">【Food】</span> &nbsp;
-                        <span className="each-id" id={`pid-${i}-title`} onClick={() => props.navigate(`/post/${post.id}`)}>{post.title}</span>
-                      </div>
-                      <div className="article-postfix">
-                        <span className="each-time" id={`pid-${i}-time`}>{moment(post.timestamp).format("YYYY-MM-DD")}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              }
+              <Tab username={username} query_fn={GIVE_POSTS_QUERY} post_type={"givePosts"} navigate={props.navigate}/>
           </TabPane>
         </Tabs>
         
