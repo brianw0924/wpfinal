@@ -13,3 +13,31 @@ export const POST_CREATED_SUBSCRIPTION = gql`
     }
   }
 `;
+
+export const ORDER_CREATED_SUBSCRIPTION = gql`
+  subscription orderCreated {
+    orderCreated {
+      id
+      title
+      content
+      number
+      location
+      timestamp
+      from
+    }
+  }
+`;
+
+export const POST_DELETED_SUBSCRIPTION = gql`
+  subscription postDeleted {
+    postDeleted {
+      id
+      title
+      content
+      number
+      location
+      timestamp
+      from
+    }
+  }
+`;

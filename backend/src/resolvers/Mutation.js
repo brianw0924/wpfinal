@@ -33,9 +33,9 @@ const Mutation = {
     user.order.push(postId);
     await user.save();
 
-    // pubSub.publish("ORDER_CREATED", {
-    //   orderCreated: post,
-    // });
+    pubSub.publish("ORDER_CREATED", {
+      orderCreated: post,
+    });
     return "success";
   },
   deletePost: async (parent, { postId }, { db, pubSub }) => {

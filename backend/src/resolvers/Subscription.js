@@ -4,13 +4,11 @@ const Subscription = {
       return pubSub.asyncIterator("POST_CREATED");
     },
   },
-  // orderCreated: Post!
-  // message: {
-  //   subscribe(parent, { from, to }, { pubsub }, info) {
-  //     const chatBoxName = makeName(from, to);
-  //     return pubsub.asyncIterator(`chatBox $(chatBoxName)`);
-  //   },
-  // }
+  orderCreated: {
+    subscribe(parent, args, { pubsub }) {
+      return pubsub.asyncIterator("ORDER_CREATED");
+    },
+  }
   postDeleted: {
     subscribe: (parent, args, { pubSub }) => {
       return pubSub.asyncIterator("POST_DELETED");
