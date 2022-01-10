@@ -26,9 +26,8 @@ function Post({ username, ...props }) {
   const { data, subscribeToMore } = useQuery(POST_DETAIL_QUERY, {
     variables: { postId: pid, },
   });
-<<<<<<< HEAD
   const [order] = useMutation(ORDER_MUTATION);
-
+  const [deletePost] = useMutation(DELETE_POST_MUTATION);
   useEffect(() => {
       console.log("check1");
       subscribeToMore({
@@ -43,14 +42,8 @@ function Post({ username, ...props }) {
         },
       });
   }, [subscribeToMore]);
-
-
-
-=======
-  const [order]  = useMutation(ORDER_MUTATION);
-  const [deletePost] = useMutation(DELETE_POST_MUTATION);
   
->>>>>>> 9c0a26b531cf80cdb68f079af9245eb0a621dc95
+  
   // delete a post from database
   const delPost = async () => {
     console.log(`${pid}`)
