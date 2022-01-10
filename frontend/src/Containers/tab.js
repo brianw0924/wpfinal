@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { 
     POST_CREATED_SUBSCRIPTION,
+    POST_DELETED_SUBSCRIPTION
 } from "../graphql";
 import moment from "moment";
 
@@ -10,9 +11,11 @@ function Tab({query_fn, post_type, username, ...props}){
     const {data, subscribeToMore, loading} = useQuery(query_fn, {variables:{user:username}});
 
     useEffect(() => {
+        console.log("here")        
         subscribeToMore({
           document: POST_CREATED_SUBSCRIPTION,
           updateQuery: (prev, { subscriptionData }) => {
+            console.log("fuck")
             if (!subscriptionData.data) return prev;
             var cur = {};
             cur[post_type] = [subscriptionData.data.postCreated, ...prev[post_type]];
@@ -20,6 +23,21 @@ function Tab({query_fn, post_type, username, ...props}){
             // return {
             //   post_type: [subscriptionData.data.postCreated, ...prev.validPosts],
             // };
+          },
+        });
+    }, [subscribeToMore]);
+
+    useEffect(() => {      
+        subscribeToMore({
+          document: POST_DELETED_SUBSCRIPTION,
+          updateQuery: (prev, { subscriptionData }) => {
+            if (!subscriptionData.data) return prev;
+            var cur = {};
+            cur[post_type] = prev[post_type].filter((t) =>{return t.id != subscriptionData.data.postDeleted })
+            return cur
+            // return {
+            //     tasks: prev.tasks.filter((t) =>{return t.id != subscriptionData.data.taskDeleted }),
+            //   };
           },
         });
     }, [subscribeToMore]);

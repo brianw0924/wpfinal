@@ -29,6 +29,7 @@ function Post({ username, ...props }) {
   
   // delete a post from database
   const delPost = async () => {
+    console.log(`${pid}`)
     deletePost({
       variables: {
         postId:pid,

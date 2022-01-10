@@ -39,7 +39,7 @@ const Mutation = {
     return "success";
   },
   deletePost: async (parent, { postId }, { db, pubSub }) => {
-    await db.Post.deleteOne({ postId });
+    await db.Post.deleteOne({ _id:postId });
     pubSub.publish("POST_DELETED", {
       postDeleted: postId,
     });
