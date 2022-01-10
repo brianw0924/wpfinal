@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react"
 import moment from "moment"
-import { POST_DETAIL_QUERY, ORDER_MUTATION } from "../graphql";
+import {
+  POST_DETAIL_QUERY, 
+  ORDER_MUTATION,
+  DELETE_POST_MUTATION
+} from "../graphql";
 import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom"
 import { IconButton, Button, Typography } from "@material-ui/core"
@@ -22,6 +26,7 @@ function Post({ username, ...props }) {
   const { data, subscribeToMore } = useQuery(POST_DETAIL_QUERY, {
     variables: { postId: pid, },
   });
+<<<<<<< HEAD
   const [order] = useMutation(ORDER_MUTATION);
 
   useEffect(() => {
@@ -41,16 +46,25 @@ function Post({ username, ...props }) {
 
 
 
+=======
+  const [order]  = useMutation(ORDER_MUTATION);
+  const [deletePost] = useMutation(DELETE_POST_MUTATION);
+  
+>>>>>>> 9c0a26b531cf80cdb68f079af9245eb0a621dc95
   // delete a post from database
   const delPost = async () => {
-    // await instance.delete("/post", {
-    //   params: {
-    //     pid
-    //   }
-    // });
-    // setTimeout(() => {
-    //   props.navigate(-1)
-    // }, 300)
+    deletePost({
+      variables: {
+        postId:pid,
+      },
+      // refetchQueries: [GET_TASKS_QUERY],
+      // onError: (err) => {
+      //   console.log(err);
+      // },
+    });
+    setTimeout(() => {
+      props.navigate(-1)
+    }, 300)
   }
   const orderFood = async () => {
     const msg = await order({
