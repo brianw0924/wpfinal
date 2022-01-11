@@ -8,7 +8,15 @@ import moment from "moment";
 
 function Tab({query_fn, post_type, username, ...props}){
 
-    const {data, subscribeToMore, loading} = useQuery(query_fn, {variables:{user:username}});
+    const {data, subscribeToMore, loading} = 
+        useQuery(
+            query_fn, 
+            { 
+                variables: { user:username },
+                fetchPolicy: "cache-and-network",
+                nextFetchPolicy: "cache-first", 
+            },
+        );
 
     useEffect(() => {
         console.log("here")        

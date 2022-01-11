@@ -25,6 +25,8 @@ function Post({ username, ...props }) {
   const [detail, setDetail] = useState(null)
   const { data, subscribeToMore } = useQuery(POST_DETAIL_QUERY, {
     variables: { postId: pid, },
+    fetchPolicy: "cache-and-network",
+    nextFetchPolicy: "cache-first",
   });
   const [order] = useMutation(ORDER_MUTATION);
   const [deletePost] = useMutation(DELETE_POST_MUTATION);

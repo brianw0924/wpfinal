@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from "react";
-import moment from "moment";
 import { Button } from "@material-ui/core";
 import { Tabs } from 'antd';
 import { 
-  ALL_POSTS_QUERY,
   VALID_POSTS_QUERY,
   OBTAIN_POSTS_QUERY,
   GIVE_POSTS_QUERY,
-  POST_CREATED_SUBSCRIPTION,
 } from "../graphql";
-import { useQuery } from "@apollo/client";
 import Tab from './tab'
 
 const { TabPane } = Tabs;
