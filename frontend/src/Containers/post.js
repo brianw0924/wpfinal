@@ -22,8 +22,7 @@ const ButtonWrapper = styled.div`
 // todo: show number, user...
 function Post({ username, ...props }) {
   const { pid } = useParams()
-  const [detail, setDetail] = useState(null)
-  const { data, subscribeToMore } = useQuery(POST_DETAIL_QUERY, {
+  const { data, loading, subscribeToMore } = useQuery(POST_DETAIL_QUERY, {
     variables: { postId: pid, },
     fetchPolicy: "cache-and-network",
     nextFetchPolicy: "cache-first",
@@ -31,14 +30,10 @@ function Post({ username, ...props }) {
   const [order] = useMutation(ORDER_MUTATION);
   const [deletePost] = useMutation(DELETE_POST_MUTATION);
   useEffect(() => {
-    console.log("check1");
     subscribeToMore({
       document: ORDER_CREATED_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
-        console.log("check2");
-        // console.log(subscriptionData.data);
-        setDetail(subscriptionData.data.orderCreated);
         return {
           postDetail: subscriptionData.data.orderCreated
         };
@@ -74,12 +69,6 @@ function Post({ username, ...props }) {
     // todo deal with success or failed
     props.navigate(-1);
   }
-
-  // fetch the full information of a post from database
-  useEffect(() => {
-    if (!data) return;
-    setDetail(data.postDetail);
-  }, [data])
   
   return (
     <div className="article-wrapper">
@@ -87,38 +76,38 @@ function Post({ username, ...props }) {
         <Button variant="contained" color="primary" id="goback-reply-btn" onClick={() => props.navigate(-1)}>Back</Button>
       </div>
 
-      {detail ?
+      {loading ? <div className="article-container"><h1>Post not found</h1></div> : 
         <div className="article-container">
           <div className="article-title" id="pid-detail-title">
-            {detail.title}
+            {data.postDetail.title}
 
             {/* trigger the delPost function when click */}
-            <IconButton disabled={username!=detail.from} onClick={delPost} className="post-delete" size="small" id="pid-detail-del-btn">
+            <IconButton disabled={username!=data.postDetail.from} onClick={delPost} className="post-delete" size="small" id="pid-detail-del-btn">
               <DeleteIcon fontSize="inherit" />
             </IconButton>
           </div>
           <div className="article-time">
-            <span id="pid-detail-time">{moment(detail.timestamp).format("YYYY-MM-DD HH:mm:ss")}</span>
+            <span id="pid-detail-time">{moment(data.postDetail.timestamp).format("YYYY-MM-DD HH:mm:ss")}</span>
           </div>
           <div className="article-content-container">
             <Typography component={"span"} id="pid-detail-content">
-              {detail.content}
+              {data.postDetail.content}
             </Typography>
           </div>
           <div className="article-content-container">
             <Typography component={"span"} id="pid-detail-from">
-              {`Location: ${detail.location}`}
+              {`Location: ${data.postDetail.location}`}
             </Typography>
           </div>
           <div className="article-content-container">
             <Typography component={"span"} id="pid-detail-from">
-              {`Left: ${detail.number}`}
+              {`Left: ${data.postDetail.number}`}
             </Typography>
           </div>
           <ButtonWrapper>
             <Button variant="contained" color="primary" id="order-btn" onClick={()=>{orderFood()}}>我想要這個酷東西</Button>
           </ButtonWrapper>
-        </div> : <div className="article-container"><h1>Post not found</h1></div>
+        </div>
       }
     </div>
   );
