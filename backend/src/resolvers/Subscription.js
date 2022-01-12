@@ -5,8 +5,8 @@ const Subscription = {
     },
   },
   orderCreated: {
-    subscribe(parent, args, { pubsub }) {
-      return pubsub.asyncIterator("ORDER_CREATED");
+    subscribe(parent, args, { pubSub }) {
+      return pubSub.asyncIterator("ORDER_CREATED");
     },
   },
   postDeleted: {

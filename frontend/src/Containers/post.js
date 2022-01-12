@@ -31,18 +31,19 @@ function Post({ username, ...props }) {
   const [order] = useMutation(ORDER_MUTATION);
   const [deletePost] = useMutation(DELETE_POST_MUTATION);
   useEffect(() => {
-      console.log("check1");
-      subscribeToMore({
-        document: ORDER_CREATED_SUBSCRIPTION,
-        updateQuery: (prev, { subscriptionData }) => {
-          if (!subscriptionData.data) return prev;
-          console.log("check2");
-          // console.log(subscriptionData.data);
-          return {
-            postDetail: subscriptionData.data.orderCreated
-          };
-        },
-      });
+    console.log("check1");
+    subscribeToMore({
+      document: ORDER_CREATED_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        console.log("check2");
+        // console.log(subscriptionData.data);
+        setDetail(subscriptionData.data.orderCreated);
+        return {
+          postDetail: subscriptionData.data.orderCreated
+        };
+      },
+    });
   }, [subscribeToMore]);
   
   
