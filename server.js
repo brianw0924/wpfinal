@@ -11,7 +11,7 @@ import { fileURLToPath } from "url";
 
 // import db from "./backend/db.js";
 import connect from "./backend/src/mongo.js";
-import * as db from './backend/src/models/index.js';
+import db from './backend/src/models/index.js';
 import Query from "./backend/src/resolvers/Query.js";
 import Mutation from "./backend/src/resolvers/Mutation.js";
 import Subscription from "./backend/src/resolvers/Subscription.js";
