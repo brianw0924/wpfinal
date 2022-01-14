@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import './App.css'
 
 function App({ client, ...props }) {
-  document.title = 'NTU Food Giveaway'
+  document.title = 'NTU Food Bank'
   
   return (
     <Router>

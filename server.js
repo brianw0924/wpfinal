@@ -10,17 +10,17 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 
 // import db from "./backend/db.js";
-import connect from "./backend/src/mongo.js";
-import db from './backend/src/models/index.js';
-import Query from "./backend/src/resolvers/Query.js";
-import Mutation from "./backend/src/resolvers/Mutation.js";
-import Subscription from "./backend/src/resolvers/Subscription.js";
+import connect from "./backend/mongo.js";
+import db from './backend/models/index.js';
+import Query from "./backend/resolvers/Query.js";
+import Mutation from "./backend/resolvers/Mutation.js";
+import Subscription from "./backend/resolvers/Subscription.js";
 // import apiRoute from "./backend/route/api.js";
-
+import wakeUpDyno from "./backend/wakeUpDyno.js"
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const port = process.env.PORT || 80;
 
-const typeDefs = importSchema("./backend/src/schema.graphql");
+const typeDefs = importSchema("./backend/schema.graphql");
 const pubSub = new PubSub();
 const app = express();
 
@@ -52,6 +52,8 @@ server.installSubscriptionHandlers(httpServer);
 connect();
 
 httpServer.listen(port, () => {
+  const DYNO_URL = "https://ntu-food-bank.herokuapp.com"
+  wakeUpDyno(DYNO_URL)
   console.log(`🚀 Server Ready at ${port}! 🚀`);
   console.log(`Graphql Port at ${port}${server.subscriptionsPath}`);
 });
