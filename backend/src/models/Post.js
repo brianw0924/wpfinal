@@ -10,4 +10,7 @@ const PostSchema = new mongoose.Schema({
   collection: "post",
   timestamps: { updatedAt: "timestamp" }
 });
-export const Post = mongoose.model("Post", PostSchema);
+
+const Post = mongoose.model("Post", PostSchema);
+
+export default Post;
