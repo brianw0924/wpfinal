@@ -39,6 +39,7 @@ type Post {
   location: String!
   timestamp: Date!
   from: String!
+  hashtag: String!
 }
 
 # Input for creating a post
@@ -48,4 +49,5 @@ input NewPostInput {
   number: Int!
   location: String!
   from: String!
+  hashtag: String!
 }
