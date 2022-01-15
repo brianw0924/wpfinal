@@ -9,7 +9,7 @@ function Appbar(props) {
         <div className="appbar-left">
           <img className="logo" src={Logo} alt="Logo" />
           <span className="app-name" onClick={() => props.navigate('/')}>
-            NTU Food Giveaway
+            NTU Food Bank
           </span>
         </div>
       </Toolbar>

@@ -76,7 +76,7 @@ function Post({ username, ...props }) {
         <Button variant="contained" color="primary" id="goback-reply-btn" onClick={() => props.navigate(-1)}>Back</Button>
       </div>
 
-      {loading ? <div className="article-container"><h1>Post not found</h1></div> : 
+      {loading ? <div className="article-container"></div> : 
         <div className="article-container">
           <div className="article-title" id="pid-detail-title">
             {data.postDetail.title}
