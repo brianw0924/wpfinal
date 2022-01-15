@@ -14,6 +14,7 @@ const queryPosts = (type, user) => gql`
       timestamp
       number
       from
+      hashtag
     }
   }
 `;
@@ -31,6 +32,7 @@ export const POST_DETAIL_QUERY = gql`
       location
       timestamp
       from
+      hashtag
     }
   }
 `;

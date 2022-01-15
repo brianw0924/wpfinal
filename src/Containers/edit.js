@@ -70,7 +70,6 @@ function Edit({ username, displayStatus, ...props }) {
   const handleChange = (func) => (event) => {
     func(event.target.value);
   };
-  console.log(hashtag)
   return (
     <div className="post-wrapper">
       <div className="post-text-container">
