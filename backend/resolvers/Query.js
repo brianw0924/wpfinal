@@ -38,9 +38,7 @@ const Query = {
 
   // get user detail
   userDetail: async (parent, { user }, { db }, info) => {
-    console.log("fuck");
     const findUser = await db.User.findOne({ name: user });
-    console.log(findUser);
     return findUser;
   },
 };

@@ -56,7 +56,6 @@ function Guide({ client, ...props }) {
       // localStorage.setItem(LOCALSTORAGE_SIGNED_IN, signedIn);
     } else navigate("/");
   }, [signedIn, username]);
-  console.log(client)
   return (
     <div className="wrapper">
       <Appbar username={username} 

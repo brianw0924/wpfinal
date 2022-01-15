@@ -42,9 +42,9 @@ export const USER_DETAIL_QUERY = gql`
     userDetail(user: $user) {
       id
       name
-      password
-      give
-      order
+      give {
+        id
+      }
       n_order
     }
   }
