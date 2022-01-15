@@ -31,7 +31,7 @@ function Appbar(props) {
         </div>
         <div className="appbar-right">
           {props.signedIn === true ? <span className="app-name">Hi! {props.username}</span> : <></>}
-          {props.signedIn === true ? <span className='app-name' onClick={()=>{props.setUserInfoVisible(true);}}>UserInfo</span> : <></>}
+          {props.signedIn === true ? <span className='app-name' onClick={()=>{queryUserInfo(); props.setUserInfoVisible(true);}}>UserInfo</span> : <></>}
           {props.signedIn === true ? <span className='app-name' onClick={()=>{
             props.setSignedIn(false);
             props.navigate('/');
