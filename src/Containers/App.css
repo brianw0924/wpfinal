@@ -28,14 +28,14 @@
   margin: 0 10px 0 0;
 }
 
-.app-name {
+.app-name, .user-name, .log-out {
   color: #1976d2;
   font-size: 24px;
   font-weight: bold;
   margin: 10px;
 }
 
-.app-name:hover {
+.user-name:hover, .log-out:hover {
   cursor: pointer;
 }
 
