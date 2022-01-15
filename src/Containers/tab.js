@@ -57,7 +57,7 @@ function Tab({query_fn, post_type, username, ...props}){
                 <div className="article-post" key={i} id={`pid-${i}`}>
                     <div className="article-prefix">
                     <span className="each-tag">【{post.hashtag}】</span> &nbsp;
-                    <span className="each-id" id={`pid-${i}-title`} onClick={() => props.navigate(`/post/${post.id}`)}>{post.title}</span>
+                    <span className="each-id" id={`pid-${i}-title`} onClick={() => props.navigate(`/post/${post.id}/${post_type}`)}>{post.title}</span>
                     </div>
                     <div className="article-postfix">
                     <span className="each-time" id={`pid-${i}-time`}>{moment(post.timestamp).format("YYYY-MM-DD")}</span>

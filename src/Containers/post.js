@@ -22,7 +22,7 @@ const ButtonWrapper = styled.div`
 
 // todo: show number, user...
 function Post({ username, ...props }) {
-  const { pid } = useParams()
+  const { pid, type} = useParams()
   const { data, loading, subscribeToMore } = useQuery(POST_DETAIL_QUERY, {
     variables: { postId: pid, },
     fetchPolicy: "cache-and-network",
@@ -43,7 +43,21 @@ function Post({ username, ...props }) {
     });
   }, [subscribeToMore]);
   
-  
+  const delObtainPost = async () => {
+    deleteObtainPost({
+      variables: {
+        name:username,
+        postId:pid,
+      },
+      // refetchQueries: [GET_TASKS_QUERY],
+      // onError: (err) => {
+      //   console.log(err);
+      // },
+    });
+    setTimeout(() => {
+      props.navigate(-1)
+    }, 300)
+  }
   // delete a post from database
   const delPost = async () => {
     console.log(`${pid}`)
@@ -107,7 +121,9 @@ function Post({ username, ...props }) {
             </Typography>
           </div>
           <ButtonWrapper>
-            <Button variant="contained" color="primary" id="order-btn" onClick={()=>{orderFood()}}>我想要這個酷東西</Button>
+            {type=="validPosts" ? <Button variant="contained" color="primary" id="order-btn" onClick={()=>{orderFood()}}>我想要這個酷東西</Button>
+            : type == "obtainPosts" ? <Button variant="contained" color="primary" id="order-btn" onClick={()=>{delObtainPost(username, pid)}}>完成領取</Button>
+            : <></>}
           </ButtonWrapper>
         </div>
       }

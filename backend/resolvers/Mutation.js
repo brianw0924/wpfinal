@@ -8,6 +8,7 @@ const Mutation = {
     await new db.User({ 
       name, 
       password: bcrypt.hashSync(password, bcrypt.genSaltSync()),
+      n_order: 0
     }).save();
     return "success";
   },

@@ -23,6 +23,10 @@ function Guide({ client, ...props }) {
   const savedSignedIn = localStorage.getItem(LOCALSTORAGE_SIGNED_IN);
   const [signedIn, setSignedIn] = useState(false || savedSignedIn);
   const [userInfoVisible, setUserInfoVisible] = useState(false);
+  const [userId, setUserId] = useState('');
+  const [n_order, setN_order] = useState(0);
+  const [n_give, setN_give] = useState(0);
+
   console.log(username, signedIn)
 
   const displayStatus = (payload) => {
@@ -46,15 +50,25 @@ function Guide({ client, ...props }) {
   }
 
   useEffect(() => {
+    localStorage.setItem(LOCALSTORAGE_SIGNED_IN, signedIn);
     if (signedIn) {
       localStorage.setItem(LOCALSTORAGE_USER, username);
-      localStorage.setItem(LOCALSTORAGE_SIGNED_IN, signedIn);
+      // localStorage.setItem(LOCALSTORAGE_SIGNED_IN, signedIn);
     } else navigate("/");
   }, [signedIn, username]);
-  
+  console.log(client)
   return (
     <div className="wrapper">
-      <Appbar username={username} signedIn={signedIn} setSignedIn={setSignedIn} setUserInfoVisible={setUserInfoVisible} navigate={navigate} />
+      <Appbar username={username} 
+              signedIn={signedIn} 
+              setSignedIn={setSignedIn} 
+              setUserInfoVisible={setUserInfoVisible} 
+              navigate={navigate} 
+              setN_give={setN_give}
+              setN_order={setN_order}
+              setUserId={setUserId}
+              client={client}
+      />
       <Routes>
         <Route path="/" element={
           <SignIn
@@ -68,7 +82,7 @@ function Guide({ client, ...props }) {
         <Route path="/main" element=
           {<Board username={username} navigate={navigate}/>} 
         />
-        <Route path="/post/:pid" element=
+        <Route path="/post/:pid/:type" element=
           {<Post username={username} navigate={navigate} />} />
         <Route path="/new" element=
           {<Edit username={username} navigate={navigate} displayStatus={displayStatus}/>} />
@@ -84,10 +98,10 @@ function Guide({ client, ...props }) {
           <Button onClick={()=>{setUserInfoVisible(false);}}>OK</Button>
         ]}
       >
-        <p>userid</p>
+        <p>userid: {userId}</p>
         <p>Username: {username}</p>
-        <p>#order</p>
-        <p>#give</p>
+        <p>#order: {n_order}</p>
+        <p>#give: {n_give}</p>
       </Modal>
     </div>
   )

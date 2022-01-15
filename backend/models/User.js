@@ -5,6 +5,7 @@ const UserSchema = new mongoose.Schema({
   password: String,
   give: [{ type: mongoose.Types.ObjectId, ref: "Post" }],
   order: [{ type: mongoose.Types.ObjectId, ref: "Post" }],
+  n_order: Number
 }, {
   collection: "user",
 });
