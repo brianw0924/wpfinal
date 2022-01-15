@@ -14,8 +14,8 @@ function Appbar(props) {
           </span>
         </div>
         <div className="appbar-right">
-          {props.signedIn === true ? <span className="app-name">Hi! {props.username}</span> : <></>}
-          {props.signedIn === true ? <span className='app-name' onClick={async () => {
+          {(props.signedIn === true ) || (props.signedIn === "true")? <span className="app-name">Hi! {props.username}</span> : <></>}
+          {(props.signedIn === true ) || (props.signedIn === "true") ? <span className='app-name' onClick={async () => {
             const username = String(props.username)
             const { data } = await props.client.query({
               query: USER_DETAIL_QUERY,
@@ -28,10 +28,9 @@ function Appbar(props) {
             props.setN_order(data.userDetail.n_order)
             props.setN_give(data.userDetail.give.length)
             props.setUserId(data.userDetail.id)
-            console.log(data)
             props.setUserInfoVisible(true);
           }}>UserInfo</span> : <></>}
-          {props.signedIn === true ? <span className='app-name' onClick={()=>{
+          {(props.signedIn === true ) || (props.signedIn === "true") ? <span className='app-name' onClick={()=>{
             props.setSignedIn(false);
             props.navigate('/');
             localStorage.setItem(props.local, false);

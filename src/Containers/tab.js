@@ -19,18 +19,13 @@ function Tab({query_fn, post_type, username, ...props}){
         );
 
     useEffect(() => {
-        console.log("here")        
         subscribeToMore({
           document: POST_CREATED_SUBSCRIPTION,
           updateQuery: (prev, { subscriptionData }) => {
-            console.log("fuck")
             if (!subscriptionData.data) return prev;
             var cur = {};
             cur[post_type] = [subscriptionData.data.postCreated, ...prev[post_type]];
             return cur
-            // return {
-            //   post_type: [subscriptionData.data.postCreated, ...prev.validPosts],
-            // };
           },
         });
     }, [subscribeToMore]);

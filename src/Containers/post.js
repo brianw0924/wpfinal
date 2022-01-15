@@ -49,10 +49,6 @@ function Post({ username, ...props }) {
         name:username,
         postId:pid,
       },
-      // refetchQueries: [GET_TASKS_QUERY],
-      // onError: (err) => {
-      //   console.log(err);
-      // },
     });
     setTimeout(() => {
       props.navigate(-1)
@@ -60,15 +56,10 @@ function Post({ username, ...props }) {
   }
   // delete a post from database
   const delPost = async () => {
-    console.log(`${pid}`)
     deletePost({
       variables: {
         postId:pid,
       },
-      // refetchQueries: [GET_TASKS_QUERY],
-      // onError: (err) => {
-      //   console.log(err);
-      // },
     });
     setTimeout(() => {
       props.navigate(-1)
@@ -81,7 +72,6 @@ function Post({ username, ...props }) {
         postId: pid,
       }
     });
-    // console.log(msg)
     // todo deal with success or failed
     props.navigate(-1);
   }

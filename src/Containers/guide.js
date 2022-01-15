@@ -27,7 +27,6 @@ function Guide({ client, ...props }) {
   const [n_order, setN_order] = useState(0);
   const [n_give, setN_give] = useState(0);
 
-  console.log(username, signedIn)
   
   const displayStatus = (payload) => {
     if (payload.msg) {
