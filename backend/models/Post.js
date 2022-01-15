@@ -6,9 +6,10 @@ const PostSchema = new mongoose.Schema({
   number: Number,
   location: String,
   from: String,
+  hashtag: String,
 }, {
   collection: "post",
-  timestamps: { updatedAt: "timestamp" }
+  timestamps: { createdAt: "timestamp" }
 });
 
 const Post = mongoose.model("Post", PostSchema);
