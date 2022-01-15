@@ -12,7 +12,6 @@ type Mutation {
   newPost(input: NewPostInput!): Post
   order(name: String!, postId: ID!): String!
   deletePost(postId: ID!): ID!
-  deleteObtainPost(name: String!, postId: ID!): ID!
 }
 
 type Subscription {
