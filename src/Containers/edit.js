@@ -126,7 +126,7 @@ function Edit({ username, displayStatus, ...props }) {
             onChange={handleChange(setNumber)}
           />
         </div>
-        <>
+        <div className="post-content-container">
           <Radio.Group 
             defaultValue="Food" 
             buttonStyle="solid"
@@ -135,7 +135,7 @@ function Edit({ username, displayStatus, ...props }) {
             <Radio.Button value="Food">Food</Radio.Button>
             <Radio.Button value="Drink">Drink</Radio.Button>
           </Radio.Group>
-        </>
+        </div>
         <div className="post-btn-wrapper">
           <Button variant="contained" color="primary" className="post-btn" startIcon={<SendIcon />} id="pid-create-submit-btn" onClick={handleSubmit}>Submit</Button>
           <Button variant="contained" color="secondary" className="post-cancel-btn" endIcon={<DeleteIcon />} onClick={e => props.navigate(-1)}>Cancel</Button>
