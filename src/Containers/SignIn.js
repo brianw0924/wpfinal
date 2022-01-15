@@ -20,7 +20,6 @@ const SignIn = ({ username, setUsername, displayStatus, setSignedIn, client, nav
   const [signUpVisible, setSignUpVisible] = useState(false);
   const [password, setPassword] = useState("");
   // setSignedIn(false);
-
   return (
     <>
       <Title style={{margin:50}}>
@@ -60,20 +59,21 @@ const SignIn = ({ username, setUsername, displayStatus, setSignedIn, client, nav
                 name: username,
                 password: password,
               },
+              fetchPolicy: "no-cache",
             })
-            if (data.findUser !== "success") {
+            if (data.findUser === "success") {
+              displayStatus({
+                type: "success",
+                msg: "Logged In!",
+              })
+              setSignedIn(true);
+              navigate('/main')
+            } else {
               displayStatus({
                 type: "error",
                 msg: data.findUser,
               })
-              return;
             }
-            displayStatus({
-              type: "success",
-              msg: "Logged In!",
-            })
-            setSignedIn(true);
-            navigate('/main')
           }}
         />
         <Button 
