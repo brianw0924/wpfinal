@@ -19,7 +19,7 @@ const SignInWrapper = styled.div`
 const SignIn = ({ username, setUsername, displayStatus, setSignedIn, client, navigate}) => {
   const [signUpVisible, setSignUpVisible] = useState(false);
   const [password, setPassword] = useState("");
-  setSignedIn(false);
+  // setSignedIn(false);
 
   return (
     <>

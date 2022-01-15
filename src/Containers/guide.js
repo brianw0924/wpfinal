@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { message } from 'antd'
+import { message, Modal, Button } from 'antd'
 import "antd/dist/antd.css";
 import Appbar from '../Components/appbar'
 import Board from './board'
@@ -22,6 +22,7 @@ function Guide({ client, ...props }) {
 	const [username, setUsername] = useState("" || savedUsername);
   const savedSignedIn = localStorage.getItem(LOCALSTORAGE_SIGNED_IN);
   const [signedIn, setSignedIn] = useState(false || savedSignedIn);
+  const [userInfoVisible, setUserInfoVisible] = useState(false);
   console.log(username, signedIn)
 
   const displayStatus = (payload) => {
@@ -53,7 +54,7 @@ function Guide({ client, ...props }) {
   
   return (
     <div className="wrapper">
-      <Appbar navigate={navigate} />
+      <Appbar username={username} signedIn={signedIn} setSignedIn={setSignedIn} setUserInfoVisible={setUserInfoVisible} navigate={navigate} />
       <Routes>
         <Route path="/" element={
           <SignIn
@@ -73,6 +74,21 @@ function Guide({ client, ...props }) {
           {<Edit username={username} navigate={navigate} displayStatus={displayStatus}/>} />
         <Route element={<NoMatch navigate={navigate} />} />
       </Routes>
+      <Modal
+        visible={userInfoVisible}
+        onCancel={() => {
+          setUserInfoVisible(false);
+        }}
+        title="User Info"
+        footer = {[
+          <Button onClick={()=>{setUserInfoVisible(false);}}>OK</Button>
+        ]}
+      >
+        <p>userid</p>
+        <p>Username: {username}</p>
+        <p>#order</p>
+        <p>#give</p>
+      </Modal>
     </div>
   )
 }
