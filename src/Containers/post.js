@@ -3,7 +3,8 @@ import moment from "moment"
 import {
   POST_DETAIL_QUERY, 
   ORDER_MUTATION,
-  DELETE_POST_MUTATION
+  DELETE_POST_MUTATION,
+  DELETE_OBTAINPOST_MUTATION
 } from "../graphql";
 import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom"
@@ -29,6 +30,7 @@ function Post({ username, ...props }) {
   });
   const [order] = useMutation(ORDER_MUTATION);
   const [deletePost] = useMutation(DELETE_POST_MUTATION);
+  const [deleteObtainPost] = useMutation(DELETE_OBTAINPOST_MUTATION);
   useEffect(() => {
     subscribeToMore({
       document: ORDER_CREATED_SUBSCRIPTION,

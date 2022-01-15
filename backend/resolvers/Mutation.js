@@ -45,6 +45,14 @@ const Mutation = {
     });
     return postId;
   },
+
+  deleteObtainPost: async (parent, { name, postId }, { db, pubSub }) => {
+    await db.User.updateMany(
+      { name: name },
+      { $pull: { order: postId } }
+    );
+    return postId;
+  },
 };
 
 export default Mutation;

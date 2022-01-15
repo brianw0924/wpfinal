@@ -27,3 +27,9 @@ export const DELETE_POST_MUTATION = gql`
     deletePost(postId: $postId)
   }
 `;
+
+export const DELETE_OBTAINPOST_MUTATION = gql`
+  mutation deleteObtainPost($name: String!, $postId: ID!) {
+    deleteObtainPost(name: $name, postId: $postId)
+  }
+`;
