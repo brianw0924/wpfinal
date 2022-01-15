@@ -16,15 +16,19 @@ function Appbar(props) {
         <div className="appbar-right">
           {props.signedIn === true ? <span className="app-name">Hi! {props.username}</span> : <></>}
           {props.signedIn === true ? <span className='app-name' onClick={async () => {
+            const username = String(props.username)
             const { data } = await props.client.query({
               query: USER_DETAIL_QUERY,
               variables: { 
-                user: props.username
+                user: username
               },
+              fetchPolicy: "no-cache",
             })
+
             props.setN_order(data.userDetail.n_order)
             props.setN_give(data.userDetail.give.length)
             props.setUserId(data.userDetail.id)
+            console.log(data)
             props.setUserInfoVisible(true);
           }}>UserInfo</span> : <></>}
           {props.signedIn === true ? <span className='app-name' onClick={()=>{

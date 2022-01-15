@@ -28,7 +28,7 @@ type User {
   id: ID!
   name: String!
   password: String!
-  give: [Post!]
+  give: [ID!]
   order: [Post!]
   n_order: Int!
 }

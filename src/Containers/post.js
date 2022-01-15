@@ -107,7 +107,12 @@ function Post({ username, ...props }) {
           </div>
           <div className="article-content-container">
             <Typography component={"span"} id="pid-detail-content">
-              {data.postDetail.content}
+              From: {data.postDetail.from}
+            </Typography>
+          </div>
+          <div className="article-content-container">
+            <Typography component={"span"} id="pid-detail-content">
+              Content: {data.postDetail.content}
             </Typography>
           </div>
           <div className="article-content-container">
