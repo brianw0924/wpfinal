@@ -97,10 +97,9 @@ function Guide({ client, ...props }) {
           <Button onClick={()=>{setUserInfoVisible(false);}}>OK</Button>
         ]}
       >
-        <p>userid: {userId}</p>
         <p>Username: {username}</p>
-        <p>#order: {n_order}</p>
-        <p>#give: {n_give}</p>
+        <p># order: {n_order}</p>
+        <p># give: {n_give}</p>
       </Modal>
     </div>
   )

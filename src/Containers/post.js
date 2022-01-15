@@ -97,22 +97,22 @@ function Post({ username, ...props }) {
           </div>
           <div className="article-content-container">
             <Typography component={"span"} id="pid-detail-content">
-              From: {data.postDetail.from}
+              {`贈送者: ${data.postDetail.from}`}
             </Typography>
           </div>
           <div className="article-content-container">
             <Typography component={"span"} id="pid-detail-content">
-              Content: {data.postDetail.content}
+              {`內容: ${data.postDetail.content}`}
             </Typography>
           </div>
           <div className="article-content-container">
             <Typography component={"span"} id="pid-detail-from">
-              {`Location: ${data.postDetail.location}`}
+              {`地點: ${data.postDetail.location}`}
             </Typography>
           </div>
           <div className="article-content-container">
             <Typography component={"span"} id="pid-detail-from">
-              {`Left: ${data.postDetail.number}`}
+              {`剩餘數量: ${data.postDetail.number}`}
             </Typography>
           </div>
           <ButtonWrapper>
