@@ -24,7 +24,7 @@ function Guide({ client, ...props }) {
   const [signedIn, setSignedIn] = useState(false || savedSignedIn);
   const [userInfoVisible, setUserInfoVisible] = useState(false);
   console.log(username, signedIn)
-
+  
   const displayStatus = (payload) => {
     if (payload.msg) {
       const { type, msg } = payload;
@@ -54,7 +54,7 @@ function Guide({ client, ...props }) {
   
   return (
     <div className="wrapper">
-      <Appbar username={username} signedIn={signedIn} setSignedIn={setSignedIn} setUserInfoVisible={setUserInfoVisible} navigate={navigate} />
+      <Appbar username={username} local={LOCALSTORAGE_SIGNED_IN} signedIn={signedIn} setSignedIn={setSignedIn} setUserInfoVisible={setUserInfoVisible} navigate={navigate} />
       <Routes>
         <Route path="/" element={
           <SignIn
