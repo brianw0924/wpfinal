@@ -35,6 +35,12 @@ const Query = {
     const post = await db.Post.findById(postId);
     return post;
   },
+
+  // get user detail
+  userDetail: async (parent, { user }, { db }, info) => {
+    const findUser = await db.User.findOne({ user });
+    return findUser;
+  },
 };
 
 export default Query;

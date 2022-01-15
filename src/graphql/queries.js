@@ -36,3 +36,16 @@ export const POST_DETAIL_QUERY = gql`
     }
   }
 `;
+
+export const USER_DETAIL_QUERY = gql`
+  query userDetail($user: String!) {
+    userDetail(user: $user) {
+      id
+      name
+      password
+      give
+      order
+      n_order
+    }
+  }
+`;

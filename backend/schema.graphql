@@ -5,6 +5,7 @@ type Query {
   obtainPosts(user: String!): [Post!]!
   validPosts: [Post!]!
   postDetail(postId: ID!): Post!
+  userDetail(user: String!): User!
 }
 
 type Mutation {
@@ -29,6 +30,7 @@ type User {
   password: String!
   give: [Post!]
   order: [Post!]
+  n_order: Int!
 }
 
 type Post {

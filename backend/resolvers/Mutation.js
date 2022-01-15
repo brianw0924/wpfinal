@@ -31,6 +31,7 @@ const Mutation = {
     await post.save();
     const user = await db.User.findOne({ name });
     user.order.push(postId);
+    user.n_order++;
     await user.save();
 
     pubSub.publish("ORDER_CREATED", {
