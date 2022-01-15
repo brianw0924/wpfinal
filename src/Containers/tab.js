@@ -49,7 +49,6 @@ function Tab({query_fn, post_type, username, ...props}){
           },
         });
     }, [subscribeToMore]);
-
     return (
         <>
         { loading ?  <div></div> :
@@ -57,7 +56,7 @@ function Tab({query_fn, post_type, username, ...props}){
                 {data[post_type].map((post, i) => (
                 <div className="article-post" key={i} id={`pid-${i}`}>
                     <div className="article-prefix">
-                    <span className="each-tag">【{data.hashtag}】</span> &nbsp;
+                    <span className="each-tag">【{post.hashtag}】</span> &nbsp;
                     <span className="each-id" id={`pid-${i}-title`} onClick={() => props.navigate(`/post/${post.id}`)}>{post.title}</span>
                     </div>
                     <div className="article-postfix">
