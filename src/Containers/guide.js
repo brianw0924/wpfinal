@@ -28,7 +28,7 @@ function Guide({ client, ...props }) {
   const [n_give, setN_give] = useState(0);
 
   console.log(username, signedIn)
-
+  
   const displayStatus = (payload) => {
     if (payload.msg) {
       const { type, msg } = payload;
@@ -68,6 +68,7 @@ function Guide({ client, ...props }) {
               setN_order={setN_order}
               setUserId={setUserId}
               client={client}
+              local={LOCALSTORAGE_SIGNED_IN}
       />
       <Routes>
         <Route path="/" element={
