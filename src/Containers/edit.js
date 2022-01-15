@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button, TextField } from '@material-ui/core'
 import { Delete as DeleteIcon, LocationOff, Send as SendIcon } from '@material-ui/icons'
 import { useMutation } from "@apollo/react-hooks";
+import { Radio } from 'antd';
 import { 
   CREATE_POST_MUTATION,
   ALL_POSTS_QUERY,
@@ -15,6 +16,7 @@ function Edit({ username, displayStatus, ...props }) {
   const [content, setContent] = useState('')
   const [number, setNumber] = useState(0)
   const [location, setLocation] = useState('')
+  const [hashtag, setHashtag] = useState("Food");
   const [newPost] = useMutation(CREATE_POST_MUTATION);
   
   // create a new post and save it to database
@@ -41,6 +43,7 @@ function Edit({ username, displayStatus, ...props }) {
           number: parseInt(number),
           location: location,
           from: username,
+          hashtag: hashtag,
         }
       },
       awaitRefetchQueries: true,
@@ -67,7 +70,7 @@ function Edit({ username, displayStatus, ...props }) {
   const handleChange = (func) => (event) => {
     func(event.target.value);
   };
-
+  console.log(hashtag)
   return (
     <div className="post-wrapper">
       <div className="post-text-container">
@@ -124,7 +127,16 @@ function Edit({ username, displayStatus, ...props }) {
             onChange={handleChange(setNumber)}
           />
         </div>
-
+        <>
+          <Radio.Group 
+            defaultValue="Food" 
+            buttonStyle="solid"
+            onChange={handleChange(setHashtag)}
+          >
+            <Radio.Button value="Food">Food</Radio.Button>
+            <Radio.Button value="Drink">Drink</Radio.Button>
+          </Radio.Group>
+        </>
         <div className="post-btn-wrapper">
           <Button variant="contained" color="primary" className="post-btn" startIcon={<SendIcon />} id="pid-create-submit-btn" onClick={handleSubmit}>Submit</Button>
           <Button variant="contained" color="secondary" className="post-cancel-btn" endIcon={<DeleteIcon />} onClick={e => props.navigate(-1)}>Cancel</Button>
