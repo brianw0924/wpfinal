@@ -8,10 +8,6 @@ import {
 import Tab from './tab'
 
 const { TabPane } = Tabs;
-function callback(key) {
-  console.log(key);
-}
-
 function Board({username, ...props}) {
   return (
     <>
@@ -21,7 +17,7 @@ function Board({username, ...props}) {
       </div>
       
       <div className="board-discuss-container">
-        <Tabs defaultActiveKey="1" onChange={callback}>
+        <Tabs defaultActiveKey="1">
           <TabPane tab="Others food" key="1" style={{"font-weight": "bold"}}>
             <Tab username={username} query_fn={VALID_POSTS_QUERY} post_type={"validPosts"} navigate={props.navigate}/>
           </TabPane>
